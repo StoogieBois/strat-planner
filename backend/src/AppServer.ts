@@ -1,6 +1,6 @@
 import { createServer, Server } from 'http'
 import * as express from 'express'
-import socketIO = require('socket.io')
+import * as socketIO from 'socket.io'
 
 class AppServer {
   private port: string
