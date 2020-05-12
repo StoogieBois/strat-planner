@@ -9,11 +9,18 @@ function App() {
   }) // need to pass this around
   socket.connect()
 
-  socket.on('message', (text: string) => {
+  socket.on('message', (text: any) => {
     console.log('CLIENT_console', text)
   })
 
-  socket.emit('message', 'this is demo..')
+  socket.emit('message', {
+    type: 'hostRoom',
+    payload: {
+      roomType: 0,
+      username: 'PRAY',
+      color: '#12ffff'
+    }
+  })
   return (
     <div className="App">
       <header className="App-header">
