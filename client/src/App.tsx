@@ -2,6 +2,8 @@ import React from 'react'
 import logo from './logo.svg'
 import './App.css'
 import useSocket from './hooks/use-socket.io-client'
+import { HostRoomMessage, Message, RoomType } from './utils/types'
+import { TYPE_HOST_ROOM } from './utils/consts'
 
 function App() {
   const [socket] = useSocket('http://localhost:8080', {
@@ -9,18 +11,18 @@ function App() {
   }) // need to pass this around
   socket.connect()
 
-  socket.on('message', (text: any) => {
-    console.log('CLIENT_console', text)
+  socket.on('message', (msg: Message) => {
+    console.log('CLIENT_console', msg)
   })
-
-  socket.emit('message', {
-    type: 'hostRoom',
+  const hostRoom: HostRoomMessage = {
+    type: TYPE_HOST_ROOM,
     payload: {
-      roomType: 0,
+      roomType: RoomType.RL,
       username: 'PRAY',
       color: '#12ffff'
     }
-  })
+  }
+  socket.emit('message', hostRoom)
   return (
     <div className="App">
       <header className="App-header">

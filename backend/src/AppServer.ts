@@ -2,8 +2,8 @@ import { createServer, Server } from 'http'
 import * as express from 'express'
 import * as socketIO from 'socket.io'
 import Room from './Room'
-import { Message } from './utils/types'
-import { TYPE_HOST_ROOM, TYPE_INVALID_ROOM, TYPE_JOIN_ROOM } from './utils/consts'
+import { Message } from '../../client/src/utils/types'
+import { TYPE_HOST_ROOM, TYPE_INVALID_ROOM, TYPE_JOIN_ROOM } from '../../client/src/utils/consts'
 import { genId } from './utils/id'
 
 class AppServer {

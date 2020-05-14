@@ -1,11 +1,5 @@
-import { Member, Message } from './utils/types'
-
-export enum RoomType {
-  SIEGE,
-  VALORANT,
-  CSGO,
-  RL
-}
+import { Message, RoomType } from '../../client/src/utils/types'
+import { Member } from './utils/types'
 
 export type RoomId = string
 
@@ -33,8 +27,8 @@ class Room {
 
   public handleMessage(msg: Message) {
     // Persist and send message to other members
-    const { type, payload, senderId } = msg
-    console.log(`type=${type}, payload=${JSON.stringify(payload)}, senderId=${senderId}`)
+    const { type, payload } = msg
+    console.log(`type=${type}, payload=${JSON.stringify(payload)}`)
   }
 }
 
