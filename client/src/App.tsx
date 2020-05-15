@@ -1,7 +1,7 @@
 import React from 'react'
-import logo from './logo.svg'
-import './App.css'
 import useSocket from './hooks/use-socket.io-client'
+import Canvas from './components/Canvas'
+import { makeStyles } from '@material-ui/core/styles'
 import { HostRoomMessage, Message, RoomType } from './utils/types'
 import { TYPE_HOST_ROOM } from './utils/consts'
 
@@ -24,22 +24,9 @@ function App() {
   }
   socket.emit('message', hostRoom)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo"/>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Canvas />
+    </>
   )
 }
 
