@@ -2,6 +2,8 @@ import React from 'react'
 import useSocket from './hooks/use-socket.io-client'
 import Canvas from './components/Canvas'
 import { makeStyles } from '@material-ui/core/styles'
+import { HostRoomMessage, Message, RoomType } from './utils/types'
+import { TYPE_HOST_ROOM } from './utils/consts'
 
 function App() {
   const [socket] = useSocket('http://localhost:8080', {
@@ -9,11 +11,18 @@ function App() {
   }) // need to pass this around
   socket.connect()
 
-  socket.on('message', (text: string) => {
-    console.log('CLIENT_console', text)
+  socket.on('message', (msg: Message) => {
+    console.log('CLIENT_console', msg)
   })
-
-  socket.emit('message', 'this is demo..')
+  const hostRoom: HostRoomMessage = {
+    type: TYPE_HOST_ROOM,
+    payload: {
+      roomType: RoomType.RL,
+      username: 'PRAY',
+      color: '#12ffff'
+    }
+  }
+  socket.emit('message', hostRoom)
   return (
     <>
       <Canvas />
