@@ -39,6 +39,7 @@ export interface JoinRoomMessage {
 type Action = 'add' | 'edit' | 'delete'
 
 export interface ToolMessage {
+  id?: string
   type: typeof TYPE_TOOL
   action: Action
   payload: Drawable
@@ -56,6 +57,7 @@ type Point = {
 }
 
 interface Drawable {
+  origin: Point
   color: Color
   scaleX: number
   scaleY: number
@@ -77,7 +79,7 @@ interface Rotatable {
 
 export interface PenTool extends Drawable, Draggable {
   type: typeof TOOL_PEN
-  points: Point[]
+  points: Point[] // all except origin point
 }
 
 export interface TextTool extends Drawable, Draggable, Rotatable {
