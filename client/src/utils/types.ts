@@ -85,13 +85,12 @@ export interface PenTool extends Drawable, Draggable {
 export interface TextTool extends Drawable, Draggable, Rotatable {
   type: typeof TOOL_TEXT
   text: string
-  origin: Point // Top-left
+  size: number
 }
 
 export interface IconTool extends Drawable, Draggable {
   type: typeof TOOL_ICON
   src: string
-  origin: Point // Top-left
 }
 
 type Shape = 'rectangle' | 'circle' | 'triangle'
@@ -99,7 +98,6 @@ type Shape = 'rectangle' | 'circle' | 'triangle'
 export interface ShapeTool extends Drawable, Draggable, Rotatable {
   type: typeof TOOL_SHAPE
   shapeName: Shape
-  origin: Point // Top-left
   height: number
   width: number
 }
@@ -107,6 +105,5 @@ export interface ShapeTool extends Drawable, Draggable, Rotatable {
 export interface LineTool extends Drawable, Draggable, Rotatable {
   type: typeof TOOL_LINE
   hasArrowHead: boolean
-  origin: Point
   end: Point
 }
