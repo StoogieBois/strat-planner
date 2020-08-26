@@ -1,7 +1,7 @@
 import React from 'react'
+
 import useSocket from './hooks/use-socket.io-client'
-import Canvas from './components/Canvas'
-import { makeStyles } from '@material-ui/core/styles'
+import { Board } from './components'
 import { HostRoomMessage, Message, RoomType } from './utils/types'
 import { TYPE_HOST_ROOM } from './utils/consts'
 
@@ -23,11 +23,7 @@ function App() {
     }
   }
   socket.emit('message', hostRoom)
-  return (
-    <>
-      <Canvas />
-    </>
-  )
+  return <Board />
 }
 
 export default App
