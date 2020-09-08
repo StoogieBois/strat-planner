@@ -16,7 +16,9 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+    "react-sketch": "^0.5.1",
     "react-zoom-pan-pinch": "^1.6.1",
+    "recoil": "^0.0.10",
     "socket.io-client": "^2.3.0",
     "typescript": "~3.7.2"
   },
