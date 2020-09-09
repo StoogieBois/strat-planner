@@ -1,11 +1,11 @@
 import React from 'react'
+
 import useSocket from './hooks/use-socket.io-client'
 import Canvas from './components/Canvas'
-import { makeStyles } from '@material-ui/core/styles'
 import { HostRoomMessage, Message, RoomType } from './utils/types'
 import { TYPE_HOST_ROOM } from './utils/consts'
 import Toolbar from './components/Toolbar'
-import { RecoilRoot } from 'recoil'
+import AppBar from './components/AppBar'
 
 function App() {
   const [socket] = useSocket('http://localhost:8080', {
@@ -25,11 +25,13 @@ function App() {
     }
   }
   socket.emit('message', hostRoom)
+
   return (
-    <RecoilRoot>
+    <React.Fragment>
+      <AppBar />
       <Toolbar />
       <Canvas />
-    </RecoilRoot>
+    </React.Fragment>
   )
 }
 
