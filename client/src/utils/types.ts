@@ -1,5 +1,6 @@
 import {
-  TOOL_ICON, TOOL_LINE,
+  TOOL_ICON,
+  TOOL_LINE,
   TOOL_PEN,
   TOOL_SHAPE,
   TOOL_TEXT,
@@ -106,4 +107,8 @@ export interface LineTool extends Drawable, Draggable, Rotatable {
   type: typeof TOOL_LINE
   hasArrowHead: boolean
   end: Point
+}
+
+export interface CanvasObject {
+  current: any
 }

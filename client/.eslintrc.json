@@ -13,14 +13,8 @@
     }
   },
   "rules": {
-    "semi": [
-      "error",
-      "never"
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ],
+    "semi": ["error", "never"],
+    "quotes": ["error", "single"],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/member-delimiter-style": [
       "error",
@@ -35,5 +29,8 @@
         }
       }
     ]
+  },
+  "env": {
+    "browser": true
   }
 }

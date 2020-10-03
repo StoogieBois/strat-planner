@@ -1,96 +1,68 @@
-import React, { useEffect, useRef, useState, MouseEvent } from 'react'
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch/dist'
-import { makeStyles } from '@material-ui/core'
+import React, { useEffect, useRef, useState } from 'react'
+import { SketchField } from 'react-sketch'
+import { useRecoilState } from 'recoil'
+import { toolState } from '../atoms'
+import toolMapper from '../utils/toolMapper'
+import { CanvasObject } from '../utils/types'
 
-import map from '../maps/rl_pitch.png'
-
-let ctx: CanvasRenderingContext2D | null
-
-export default function Canvas() {
-  const _board = useRef<HTMLCanvasElement>(null)
-  const [isPainting, setIsPainting] = useState(false)
-  const [prevPos, setPrevPos] = useState<IClient>({ clientX: 0, clientY: 0 })
-  const [line, setLine] = useState<ILine[]>([])
-  const [userStrokeStyle, setUserStrokeStyle] = useState('#EE92C2')
+function Canvas() {
+  const canvasRef: CanvasObject = useRef(null)
+  const [tool, setTool] = useRecoilState(toolState)
+  const [lastTool, setLastTool] = useState('pencil')
 
   useEffect(() => {
-    if (_board.current) {
-      console.log(_board.current)
-      _board.current.width = 1000
-      _board.current.height = 800
-      ctx = _board.current.getContext('2d')
-      if (ctx) {
-        ctx.lineJoin = 'round'
-        ctx.lineCap = 'round'
-        ctx.lineWidth = 5
+    const handleKeyUp = (event: KeyboardEvent) => {
+      const { code } = event
+
+      if (code === 'Space') {
+        setTool(lastTool)
       }
     }
-  }, [_board])
 
-  const handleMouseDown = (event: MouseEvent) => {
-    const { clientX, clientY } = event
-    setIsPainting(true)
-    setPrevPos({ clientX, clientY })
-  }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const { key, code, ctrlKey, repeat } = event
 
-  const handleMouseMove = (event: MouseEvent) => {
-    if (isPainting) {
-      const { clientX, clientY } = event
-      const offsetData = { clientX, clientY }
+      if (repeat) return
 
-      // Set the start and stop position of the paint event
-      const positionData = {
-        start: { ...prevPos },
-        stop: { ...offsetData }
+      if (ctrlKey && key.toLowerCase() === 'z') {
+        canvasRef.current.undo()
       }
 
-      setLine([...line, positionData])
-      paint(prevPos, offsetData, userStrokeStyle)
-    }
-  }
+      if (ctrlKey && key.toLowerCase() === 'y') {
+        canvasRef.current.redo()
+      }
 
-  const endPaintEvent = () => {
-    if (isPainting) {
-      setIsPainting(false)
-    }
-  }
+      if (key === 'Delete') {
+        canvasRef.current?.removeSelected()
+      }
 
-  const paint = (prevPos: IClient, currPos: IClient, strokeStyle: string) => {
-    const { clientX, clientY } = currPos
-    const { clientX: x, clientY: y } = prevPos
-
-    if (ctx) {
-      ctx.beginPath()
-      ctx.strokeStyle = strokeStyle
-      // Move the the prevPosition of the mouse
-      ctx.moveTo(x, y)
-      // Draw a line to the current position of the mouse
-      ctx.lineTo(clientX, clientY)
-      // Visualize the line using the strokeStyle
-      ctx.stroke()
+      if (code === 'Space') {
+        setLastTool(tool)
+        setTool('pan')
+      }
     }
 
-    setPrevPos({ clientX, clientY })
-  }
+    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('keyup', handleKeyUp)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('keyup', handleKeyUp)
+    }
+  }, [])
 
   return (
-    <canvas
-      ref={_board}
-      style={{ background: 'yellow' }}
-      onMouseDown={handleMouseDown}
-      onMouseLeave={endPaintEvent}
-      onMouseUp={endPaintEvent}
-      onMouseMove={handleMouseMove}
+    <SketchField
+      ref={canvasRef}
+      width={window.innerWidth + 2}
+      height={window.innerHeight - 56}
+      undoSteps={15}
+      tool={toolMapper(tool)}
+      backgroundColor="#131C2F"
+      lineColor="white"
+      lineWidth={3}
     />
   )
 }
 
-interface ILine {
-  start: IClient
-  stop: IClient
-}
-
-interface IClient {
-  clientX: number
-  clientY: number
-}
+export default Canvas
