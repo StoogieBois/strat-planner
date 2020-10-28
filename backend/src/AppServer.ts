@@ -64,5 +64,3 @@ io.on('connect', (clientSocket) => {
     }
   })
 })
-
-export default AppServer

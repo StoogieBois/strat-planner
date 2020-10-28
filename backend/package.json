@@ -18,7 +18,7 @@
     "ts-node-dev": "^1.0.0-pre.44"
   },
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpileOnly ./src/server.ts",
+    "dev": "ts-node-dev --respawn --transpileOnly ./src/AppServer.ts",
     "run": "tsc && node ./dist/server.js"
   }
 }
