@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, { useRef } from 'react'
 import {
   Button,
   Drawer,
@@ -15,7 +15,7 @@ import GameSelector from './GameSelector'
 
 function SettingsDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const btnRef = useRef()
+  const btnRef = useRef<HTMLButtonElement>(null)
 
   return (
     <>
