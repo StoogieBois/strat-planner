@@ -6,6 +6,8 @@ import { HostRoomMessage, Message, RoomType } from './utils/types'
 import { TYPE_HOST_ROOM } from './utils/consts'
 import Toolbar from './components/Toolbar'
 import AppBar from './components/AppBar'
+import { Box } from '@chakra-ui/core'
+import { AiFillGithub } from 'react-icons/all'
 
 function App() {
   const [socket] = useSocket('http://localhost:8080', {
@@ -27,11 +29,27 @@ function App() {
   socket.emit('message', hostRoom)
 
   return (
-    <React.Fragment>
+    <Box position="relative">
       <AppBar />
       <Toolbar />
       <Canvas />
-    </React.Fragment>
+      <Box
+        as={AiFillGithub}
+        position="fixed"
+        right="24px"
+        bottom="24px"
+        cursor="pointer"
+        color="white"
+        onClick={() =>
+          window.open(
+            'https://github.com/StoogieBois/strat-planner',
+            '_blank',
+            'noopener,noreferrer'
+          )
+        }
+        size="32px"
+      />
+    </Box>
   )
 }
 

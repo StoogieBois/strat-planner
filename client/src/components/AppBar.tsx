@@ -1,33 +1,18 @@
 import React from 'react'
-import { Box, Flex, Text, theme } from '@chakra-ui/core'
-import { AiFillGithub } from 'react-icons/all'
-import styled from '@emotion/styled'
-
-const GitHub = styled(Box)`
-  cursor: pointer;
-`
+import { Flex, Text, theme } from '@chakra-ui/core'
+import SettingsDrawer from './SettingsDrawer'
 
 function AppBar() {
   return (
     <Flex
-      backgroundColor={theme.colors.gray['200']}
+      backgroundColor={theme.colors.gray['100']}
       height="56px"
       p={4}
       alignItems="center"
       justifyContent="space-between"
     >
       <Text fontSize="2xl">Strat Planner</Text>
-      <GitHub
-        as={AiFillGithub}
-        onClick={() =>
-          window.open(
-            'https://github.com/StoogieBois/strat-planner',
-            '_blank',
-            'noopener,noreferrer'
-          )
-        }
-        size="32px"
-      />
+      <SettingsDrawer />
     </Flex>
   )
 }
